@@ -10,9 +10,9 @@ const Videos = require('../models/Videos');
  */
 router.get("/", async(req, res) => {
   const videos  = await Videos.find({})
-  console.log('videos', videos)
-  if (videos.length){
+  if (videos.length > 0){
     res.json(videos)
+    return
   }
   res.status(404).json({message: 'No videos found'})
 });
@@ -27,7 +27,7 @@ router.get("/:id", async(req, res) => {
     const video  = await Videos.findById({_id: id})
     res.json(video)
   } catch (error) {
-    res.status(500).json(error)
+    res.status(404).json(error)
   }
 });
 
@@ -46,7 +46,7 @@ router.post("/", async(req, res) => {
       youtubeLink,
     })
     const data = await video.save()
-    res.json(data)
+    res.status(201).json(data)
   } catch (error) {
     res.status(500).json(error)
   }
@@ -57,7 +57,6 @@ router.post("/", async(req, res) => {
  * @desc Updates a video
  */
 router.put("/:id", async(req, res) => {
-  try {
     const { id } = req.params
     // const { title, description, image, youtubeLink } = req.body
     const newData = {
@@ -67,6 +66,7 @@ router.put("/:id", async(req, res) => {
     Videos.findByIdAndUpdate(
       { _id: id },
       newData,
+      {new: true},
       function(err, result) {
         if (err) {
           res.status(500).json(err)
@@ -75,9 +75,6 @@ router.put("/:id", async(req, res) => {
         }
       }
     );
-  } catch (error) {
-    res.status(500).json(error)
-  }
 });
 
 /**

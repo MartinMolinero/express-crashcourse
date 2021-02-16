@@ -4,10 +4,9 @@ const bodyParser = require('body-parser')
 const app = express()
 require('dotenv').config()
 
-const videoRoutes = require('./routes/videosRoutes')
+const videoRoutes = require('./src/routes/videosRoutes')
 
 const MONGODB_URI = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.2hvwk.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`
-
 // Connect to Atlas
 mongoose.connect(MONGODB_URI)
 
@@ -24,5 +23,7 @@ app.get('/', (req, res) => {
   res.send('we are home')
 })
 
+module.exports = app
+
 // Listen
-app.listen(3000)
+// app.listen(3000)

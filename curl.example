@@ -1,0 +1,12 @@
+ martin
+2A9hmlMF67k8IvIb
+
+
+curl --location --request POST 'localhost:3000/videos' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "title":"un titulo",
+    "description":"una descripcion",
+    "image": "una imagen",
+    "youtubeLink": "un link"
+}'
