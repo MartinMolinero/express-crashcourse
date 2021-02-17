@@ -29,7 +29,7 @@ test("POST /videos", async () => {
   expect(response.body.youtubeLink).toBe(video.youtubeLink);
 });
 
-test("POST /videos", async () => {
+test("POST /videos negative", async () => {
   const video = { description: "Lorem ipsum", image: 'image-url', youtubeLink: 'youtu.be.com/hVuBk' }
   const response = await supertest(app).post("/videos").send(video)
   expect(response.status).toEqual(500)
