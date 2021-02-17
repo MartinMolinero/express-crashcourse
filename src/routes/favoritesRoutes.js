@@ -7,8 +7,8 @@ const Users = require('../models/Users');
 const Favorites = require('../models/Favorites');
 
 /**
- * @route GET videos/
- * @desc Fetches all the available videos
+ * @route GET favorites/
+ * @desc Fetches all the favorites
  */
 router.get("/", async(req, res) => {
   const favorites  = await Favorites.find({}).populate({path: 'user', model: 'Users'}).populate({path: 'video', model: 'Videos'})
@@ -21,7 +21,7 @@ router.get("/", async(req, res) => {
 
 /**
  * @route GET favorites/:id
- * @desc Fetch one video info
+ * @desc Fetch one favorite
  */
 router.get("/:id", async(req, res) => {
   try {
