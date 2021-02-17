@@ -11,7 +11,7 @@ const Favorites = require('../models/Favorites');
  * @desc Fetches all the available videos
  */
 router.get("/", async(req, res) => {
-  const favorites  = await Favorites.find({})
+  const favorites  = await Favorites.find({}).populate({path: 'user', model: 'Users'}).populate({path: 'video', model: 'Videos'})
   if (favorites.length > 0){
     res.json(favorites)
     return
@@ -26,7 +26,7 @@ router.get("/", async(req, res) => {
 router.get("/:id", async(req, res) => {
   try {
     const { id } = req.params
-    const favorite  = await Favorites.findById({_id: id}).populate('Videos').populate('Users')
+    const favorite  = await Favorites.findById({_id: id}).populate({path: 'user', model: 'Users'}).populate({path: 'video', model: 'Videos'})
     res.json(favorite)
   } catch (error) {
     res.status(404).json(error)
@@ -59,7 +59,7 @@ router.post("/", async(req, res) => {
 router.delete("/:id", async(req, res) => {
   try {
     const { id } = req.params
-    const favorite  = await Favorites.findByIdAndDelete({_id: id})
+    const favorite  = await Favorites.findByIdAndDelete({_id: id}).populate({path: 'user', model: 'Users'}).populate({path: 'video', model: 'Videos'})
     res.status(200).json(favorite)
   } catch (error) {
     res.status(500).json(error)
